@@ -1,0 +1,15 @@
+{
+  "name": "instagram-automation",
+  "version": "1.0.0",
+  "description": "Automação para buscar posts do Instagram e publicar JSON para o site 3W Entretenimento",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-posts.js",
+    "refresh": "node refresh-token.js",
+    "setup": "node setup-token.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2"
+  }
+}

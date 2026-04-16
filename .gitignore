@@ -1,0 +1,8 @@
+# Credenciais — NUNCA sobe para o GitHub
+.env
+
+# Gerado localmente pelo script (o GitHub Actions gera o próprio)
+public/
+
+# Node
+node_modules/
