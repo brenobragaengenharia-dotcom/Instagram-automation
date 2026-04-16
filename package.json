@@ -5,11 +5,15 @@
   "type": "module",
   "scripts": {
     "fetch": "node fetch-posts.js",
+    "publish": "node publish.js",
     "refresh": "node refresh-token.js",
     "setup": "node setup-token.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
