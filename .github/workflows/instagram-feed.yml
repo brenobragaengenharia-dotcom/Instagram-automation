@@ -1,0 +1,47 @@
+name: Atualizar Feed Instagram
+
+on:
+  # Executa todo dia às 6h horário de Brasília (9h UTC)
+  schedule:
+    - cron: "0 9 * * *"
+
+  # Permite rodar manualmente pelo GitHub Actions
+  workflow_dispatch:
+
+jobs:
+  fetch-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # necessário para fazer push para gh-pages
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Buscar posts do Instagram
+        env:
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+          INSTAGRAM_TOKEN_MAIN: ${{ secrets.INSTAGRAM_TOKEN_MAIN }}
+          INSTAGRAM_TOKEN_ESPORTS: ${{ secrets.INSTAGRAM_TOKEN_ESPORTS }}
+          INSTAGRAM_TOKEN_COMICS: ${{ secrets.INSTAGRAM_TOKEN_COMICS }}
+          MAX_POSTS: "12"
+        run: npm run fetch
+
+      - name: Publicar JSON no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          # Mantém arquivos anteriores (não apaga tudo)
+          keep_files: true
+          # Mensagem do commit
+          commit_message: "chore: atualiza feed Instagram [${{ github.run_number }}]"
